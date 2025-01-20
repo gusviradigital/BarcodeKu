@@ -1,0 +1,61 @@
+<h1>Kebijakan Privasi BarcodeKu</h1>
+
+<h2>Pendahuluan</h2>
+BarcodeKu berkomitmen untuk melindungi privasi pengguna. Kebijakan privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi yang Anda berikan saat menggunakan aplikasi kami.
+
+<h2>Informasi yang Kami Kumpulkan</h2>
+<h3>1. Informasi Penggunaan</h3>
+- Riwayat pemindaian barcode
+- Barcode yang dibuat
+- Pengaturan aplikasi
+- Data penggunaan fitur
+
+<h3>2. Izin Perangkat</h3>
+Aplikasi memerlukan izin berikut:
+- Kamera: untuk memindai barcode
+- Penyimpanan: untuk menyimpan hasil pemindaian dan barcode yang dibuat
+- Internet: untuk pembaruan aplikasi dan fitur premium
+
+<h2>Penggunaan Informasi</h2>
+Kami menggunakan informasi yang dikumpulkan untuk:
+- Menyediakan fungsi utama aplikasi
+- Meningkatkan pengalaman pengguna
+- Menyimpan preferensi pengguna
+- Memberikan dukungan teknis
+
+<h2>Penyimpanan Data</h2>
+- Data disimpan secara lokal di perangkat Anda
+- Tidak ada data yang dikirim ke server eksternal
+- Data dapat dihapus kapan saja melalui menu aplikasi
+
+<h2>Keamanan</h2>
+Kami menerapkan langkah-langkah keamanan untuk melindungi informasi Anda:
+- Enkripsi data lokal
+- Akses terbatas ke data sensitif
+- Pembaruan keamanan berkala
+
+<h2>Berbagi Data</h2>
+Kami tidak membagikan informasi pribadi Anda dengan pihak ketiga kecuali:
+- Atas persetujuan Anda
+- Diperlukan oleh hukum
+- Bagian dari fitur yang Anda pilih (seperti berbagi hasil pemindaian)
+
+<h2>Fitur Premium</h2>
+Untuk pengguna premium:
+- Pembayaran diproses melalui Google Play
+- Data transaksi ditangani sesuai kebijakan Google Play
+- Tidak ada informasi pembayaran yang disimpan di aplikasi
+
+<h2>Perubahan Kebijakan</h2>
+Kami dapat memperbarui kebijakan privasi ini sewaktu-waktu. Perubahan akan diberitahukan melalui:
+- Pembaruan aplikasi
+- Pemberitahuan dalam aplikasi
+- Email (jika tersedia)
+
+<h2>Kontak</h2>
+Jika Anda memiliki pertanyaan tentang kebijakan privasi ini, silakan hubungi kami di:
+- Email: support@barcodeku.com
+- Website: www.barcodeku.com
+
+<h2>Terakhir Diperbarui</h2>
+25 Maret 2024 
