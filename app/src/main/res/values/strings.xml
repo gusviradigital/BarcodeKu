@@ -1,3 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App Name -->
     <string name="app_name">BarcodeKu</string>
+
+    <!-- General -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="share">Share</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
+
+    <!-- Navigation -->
+    <string name="nav_scan">Scan</string>
+    <string name="nav_generate">Generate</string>
+    <string name="nav_history">History</string>
+    <string name="nav_favorites">Favorites</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Scanner -->
+    <string name="scanner_title">Scan Barcode</string>
+    <string name="scanner_flash_on">Flash On</string>
+    <string name="scanner_flash_off">Flash Off</string>
+    <string name="scanner_auto_focus">Auto Focus</string>
+    <string name="scanner_batch_mode">Batch Mode</string>
+    <string name="scanner_processing">Processing…</string>
+    <string name="scanner_align">Align barcode within frame</string>
+    <string name="scanner_permission_required">Camera permission required</string>
+    <string name="scanner_permission_denied">Cannot scan without camera permission</string>
+
+    <!-- Generator -->
+    <string name="generator_title">Generate Barcode</string>
+    <string name="generator_input_hint">Enter text or URL</string>
+    <string name="generator_type">Barcode Type</string>
+    <string name="generator_size">Size</string>
+    <string name="generator_color">Color</string>
+    <string name="generator_create">Create</string>
+    <string name="generator_save_image">Save Image</string>
+    <string name="generator_share_image">Share Image</string>
+
+    <!-- History -->
+    <string name="history_title">Scan History</string>
+    <string name="history_empty">No scans yet</string>
+    <string name="history_delete_all">Clear History</string>
+    <string name="history_delete_confirm">Delete this item?</string>
+    <string name="history_export">Export History</string>
+    <string name="history_filter">Filter</string>
+
+    <!-- Results -->
+    <string name="result_copied">Copied to clipboard</string>
+    <string name="result_save_success">Saved successfully</string>
+    <string name="result_save_failed">Failed to save</string>
+    <string name="result_share_via">Share via</string>
+    <string name="result_open_url">Open URL</string>
+
+    <!-- Business Features -->
+    <string name="business_mode">Business Mode</string>
+    <string name="business_batch_scan">Batch Scan</string>
+    <string name="business_export">Export Data</string>
+    <string name="business_import">Import Data</string>
+    <string name="business_inventory">Inventory</string>
+    <string name="business_analytics">Analytics</string>
+
+    <!-- Settings -->
+    <string name="settings_general">General Settings</string>
+    <string name="settings_camera">Camera Settings</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_vibrate">Vibrate on scan</string>
+    <string name="settings_sound">Sound effects</string>
+    <string name="settings_auto_copy">Auto copy to clipboard</string>
+    <string name="settings_save_history">Save scan history</string>
+
+    <!-- Premium Features -->
+    <string name="premium_title">Premium Features</string>
+    <string name="premium_unlock">Unlock Premium</string>
+    <string name="premium_features">Premium Features</string>
+    <string name="premium_no_ads">Remove Ads</string>
+    <string name="premium_batch_scan">Unlimited Batch Scan</string>
+    <string name="premium_cloud_backup">Cloud Backup</string>
+    <string name="premium_export">Advanced Export</string>
+    <string name="premium_support">Priority Support</string>
+
+    <!-- Error Messages -->
+    <string name="error_generic">Something went wrong</string>
+    <string name="error_no_camera">Camera not available</string>
+    <string name="error_invalid_barcode">Invalid barcode format</string>
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_storage_permission">Storage permission required</string>
+
+    <!-- Ad Units -->
+    <string name="ad_unit_banner" translatable="false">ca-app-pub-xxxxxxxxxxxxxxxx/yyyyyyyyyy</string>
+    <string name="ad_unit_interstitial" translatable="false">ca-app-pub-xxxxxxxxxxxxxxxx/yyyyyyyyyy</string>
+    <string name="ad_unit_reward" translatable="false">ca-app-pub-xxxxxxxxxxxxxxxx/yyyyyyyyyy</string>
+
+    <!-- About -->
+    <string name="about_app">About BarcodeKu</string>
+    <string name="about_version">Version</string>
+    <string name="about_copyright">© 2024 BarcodeKu</string>
+    <string name="about_privacy_policy">Privacy Policy</string>
+    <string name="about_terms">Terms of Service</string>
+    <string name="about_licenses">Open Source Licenses</string>
 </resources>

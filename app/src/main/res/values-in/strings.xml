@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">BarcodeKu</string>
+
+    <!-- General -->
+    <string name="ok">OK</string>
+    <string name="cancel">Batal</string>
+    <string name="save">Simpan</string>
+    <string name="delete">Hapus</string>
+    <string name="share">Bagikan</string>
+    <string name="search">Cari</string>
+    <string name="settings">Pengaturan</string>
+
+    <!-- Navigation -->
+    <string name="nav_scan">Pindai</string>
+    <string name="nav_generate">Buat</string>
+    <string name="nav_history">Riwayat</string>
+    <string name="nav_favorites">Favorit</string>
+    <string name="nav_settings">Pengaturan</string>
+
+    <!-- Scanner -->
+    <string name="scanner_title">Pindai Barcode</string>
+    <string name="scanner_flash_on">Nyalakan Flash</string>
+    <string name="scanner_flash_off">Matikan Flash</string>
+    <string name="scanner_auto_focus">Fokus Otomatis</string>
+    <string name="scanner_batch_mode">Mode Batch</string>
+    <string name="scanner_processing">Memproses…</string>
+    <string name="scanner_align">Sejajarkan barcode dalam bingkai</string>
+    <string name="scanner_permission_required">Izin kamera diperlukan</string>
+    <string name="scanner_permission_denied">Tidak dapat memindai tanpa izin kamera</string>
+
+    <!-- Generator -->
+    <string name="generator_title">Buat Barcode</string>
+    <string name="generator_input_hint">Masukkan teks atau URL</string>
+    <string name="generator_type">Jenis Barcode</string>
+    <string name="generator_size">Ukuran</string>
+    <string name="generator_color">Warna</string>
+    <string name="generator_create">Buat</string>
+    <string name="generator_save_image">Simpan Gambar</string>
+    <string name="generator_share_image">Bagikan Gambar</string>
+
+    <!-- History -->
+    <string name="history_title">Riwayat Pemindaian</string>
+    <string name="history_empty">Belum ada pemindaian</string>
+    <string name="history_delete_all">Hapus Riwayat</string>
+    <string name="history_delete_confirm">Hapus item ini?</string>
+    <string name="history_export">Ekspor Riwayat</string>
+    <string name="history_filter">Filter</string>
+
+    <!-- Results -->
+    <string name="result_copied">Disalin ke clipboard</string>
+    <string name="result_save_success">Berhasil disimpan</string>
+    <string name="result_save_failed">Gagal menyimpan</string>
+    <string name="result_share_via">Bagikan melalui</string>
+    <string name="result_open_url">Buka URL</string>
+
+    <!-- Business Features -->
+    <string name="business_mode">Mode Bisnis</string>
+    <string name="business_batch_scan">Pindai Batch</string>
+    <string name="business_export">Ekspor Data</string>
+    <string name="business_import">Impor Data</string>
+    <string name="business_inventory">Inventaris</string>
+    <string name="business_analytics">Analitik</string>
+
+    <!-- Settings -->
+    <string name="settings_general">Pengaturan Umum</string>
+    <string name="settings_camera">Pengaturan Kamera</string>
+    <string name="settings_appearance">Tampilan</string>
+    <string name="settings_language">Bahasa</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_vibrate">Getar saat memindai</string>
+    <string name="settings_sound">Efek suara</string>
+    <string name="settings_auto_copy">Salin otomatis ke clipboard</string>
+    <string name="settings_save_history">Simpan riwayat pemindaian</string>
+
+    <!-- Premium Features -->
+    <string name="premium_title">Fitur Premium</string>
+    <string name="premium_unlock">Buka Premium</string>
+    <string name="premium_features">Fitur Premium</string>
+    <string name="premium_no_ads">Hapus Iklan</string>
+    <string name="premium_batch_scan">Pindai Batch Tanpa Batas</string>
+    <string name="premium_cloud_backup">Backup Cloud</string>
+    <string name="premium_export">Ekspor Lanjutan</string>
+    <string name="premium_support">Dukungan Prioritas</string>
+
+    <!-- Error Messages -->
+    <string name="error_generic">Terjadi kesalahan</string>
+    <string name="error_no_camera">Kamera tidak tersedia</string>
+    <string name="error_invalid_barcode">Format barcode tidak valid</string>
+    <string name="error_no_internet">Tidak ada koneksi internet</string>
+    <string name="error_storage_permission">Izin penyimpanan diperlukan</string>
+
+    <!-- About -->
+    <string name="about_app">Tentang BarcodeKu</string>
+    <string name="about_version">Versi</string>
+    <string name="about_copyright">© 2024 BarcodeKu</string>
+    <string name="about_privacy_policy">Kebijakan Privasi</string>
+    <string name="about_terms">Ketentuan Layanan</string>
+    <string name="about_licenses">Lisensi Open Source</string>
+</resources> 
