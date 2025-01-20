@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_scan">
+
+    <fragment
+        android:id="@+id/navigation_scan"
+        android:name="com.abc.qrscannerdev.ui.scan.ScannerFragment"
+        android:label="@string/nav_scan">
+        <action
+            android:id="@+id/action_scan_to_result"
+            app:destination="@id/scanResultFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_generate"
+        android:name="com.abc.qrscannerdev.ui.generate.GeneratorFragment"
+        android:label="@string/nav_generate" />
+
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.abc.qrscannerdev.ui.history.HistoryFragment"
+        android:label="@string/nav_history">
+        <action
+            android:id="@+id/action_history_to_detail"
+            app:destination="@id/scanDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.abc.qrscannerdev.ui.settings.SettingsFragment"
+        android:label="@string/nav_settings" />
+
+    <fragment
+        android:id="@+id/scanResultFragment"
+        android:name="com.abc.qrscannerdev.ui.scan.ScanResultFragment"
+        android:label="Scan Result">
+        <argument
+            android:name="scanResult"
+            app:argType="string" />
+        <argument
+            android:name="barcodeFormat"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scanDetailFragment"
+        android:name="com.abc.qrscannerdev.ui.history.ScanDetailFragment"
+        android:label="Scan Detail">
+        <argument
+            android:name="scanId"
+            app:argType="long" />
+    </fragment>
+
+</navigation> 

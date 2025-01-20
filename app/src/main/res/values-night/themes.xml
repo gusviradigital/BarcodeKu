@@ -1,16 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.BarcodeKu" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.BarcodeKu" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/red_200</item>
+        <item name="colorPrimaryVariant">@color/red_300</item>
+        <item name="colorOnPrimary">@color/gray_900</item>
+        
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/orange_200</item>
+        <item name="colorSecondaryVariant">@color/orange_300</item>
+        <item name="colorOnSecondary">@color/gray_900</item>
+        
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        
+        <!-- Navigation bar color. -->
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <item name="android:windowLightNavigationBar">false</item>
+
         <!-- Customize your theme here. -->
+        <item name="colorSurface">@color/gray_900</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorSurfaceVariant">@color/gray_800</item>
+        <item name="colorOnSurfaceVariant">@color/gray_300</item>
+        <item name="colorOutline">@color/gray_600</item>
     </style>
 </resources>
