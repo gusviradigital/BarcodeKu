@@ -28,17 +28,22 @@
     <string name="scanner_processing">Processing…</string>
     <string name="scanner_align">Align barcode within frame</string>
     <string name="scanner_permission_required">Camera permission required</string>
-    <string name="scanner_permission_denied">Cannot scan without camera permission</string>
+    <string name="scanner_permission_denied">Camera permission is required for scanning</string>
+    <string name="scanner_flash">Flash</string>
 
     <!-- Generator -->
     <string name="generator_title">Generate Barcode</string>
-    <string name="generator_input_hint">Enter text or URL</string>
+    <string name="generator_input_hint">Enter content</string>
     <string name="generator_type">Barcode Type</string>
     <string name="generator_size">Size</string>
     <string name="generator_color">Color</string>
     <string name="generator_create">Create</string>
-    <string name="generator_save_image">Save Image</string>
-    <string name="generator_share_image">Share Image</string>
+    <string name="generator_save_image">Save</string>
+    <string name="generator_share_image">Share</string>
+    <string name="generator_save_success">Barcode saved successfully</string>
+    <string name="generator_save_error">Failed to save barcode</string>
+    <string name="generator_share_error">Failed to share barcode</string>
+    <string name="generator_share_via">Share barcode via</string>
 
     <!-- History -->
     <string name="history_title">Scan History</string>
@@ -49,11 +54,13 @@
     <string name="history_filter">Filter</string>
 
     <!-- Results -->
-    <string name="result_copied">Copied to clipboard</string>
+    <string name="result_copied">Content copied to clipboard</string>
     <string name="result_save_success">Saved successfully</string>
     <string name="result_save_failed">Failed to save</string>
     <string name="result_share_via">Share via</string>
     <string name="result_open_url">Open URL</string>
+    <string name="result_call_number">Call Number</string>
+    <string name="result_send_email">Send Email</string>
 
     <!-- Business Features -->
     <string name="business_mode">Business Mode</string>
@@ -103,4 +110,8 @@
     <string name="about_privacy_policy">Privacy Policy</string>
     <string name="about_terms">Terms of Service</string>
     <string name="about_licenses">Open Source Licenses</string>
+
+    <!-- Common -->
+    <string name="action_favorite">Favorite</string>
+    <string name="action_delete">Delete</string>
 </resources>
