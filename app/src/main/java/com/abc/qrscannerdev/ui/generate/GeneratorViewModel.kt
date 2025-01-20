@@ -1,10 +1,9 @@
 package com.abc.qrscannerdev.ui.generate
 
-import android.app.Application
 import android.graphics.Bitmap
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -13,7 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class GeneratorViewModel(application: Application) : AndroidViewModel(application) {
+class GeneratorViewModel : ViewModel() {
+
     private val _barcodeImage = MutableLiveData<Bitmap?>()
     val barcodeImage: LiveData<Bitmap?> = _barcodeImage
 
@@ -22,11 +22,16 @@ class GeneratorViewModel(application: Application) : AndroidViewModel(applicatio
 
     private var currentContent: String = ""
     private var currentFormat: BarcodeFormat = BarcodeFormat.QR_CODE
-    private var currentSize: Int = 500
+    private var currentSize: Int = 512
 
-    fun generateBarcode(content: String, format: BarcodeFormat = BarcodeFormat.QR_CODE, size: Int = 500) {
-        if (content.isBlank()) {
+    fun generateBarcode(content: String, format: BarcodeFormat, size: Int) {
+        if (content.isEmpty()) {
             _generationState.value = GenerationState.Error("Content cannot be empty")
+            return
+        }
+
+        if (size <= 0) {
+            _generationState.value = GenerationState.Error("Invalid size")
             return
         }
 
@@ -35,11 +40,9 @@ class GeneratorViewModel(application: Application) : AndroidViewModel(applicatio
         currentSize = size
 
         viewModelScope.launch {
+            _generationState.value = GenerationState.Generating
             try {
-                _generationState.value = GenerationState.Generating
-                val bitmap = withContext(Dispatchers.Default) {
-                    generateBarcodeImage(content, format, size)
-                }
+                val bitmap = generateBarcodeImage(content, format, size)
                 _barcodeImage.value = bitmap
                 _generationState.value = GenerationState.Success
             } catch (e: Exception) {
@@ -48,7 +51,11 @@ class GeneratorViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    private fun generateBarcodeImage(content: String, format: BarcodeFormat, size: Int): Bitmap {
+    private suspend fun generateBarcodeImage(
+        content: String,
+        format: BarcodeFormat,
+        size: Int
+    ): Bitmap = withContext(Dispatchers.Default) {
         val writer = MultiFormatWriter()
         val bitMatrix: BitMatrix = writer.encode(content, format, size, size)
         val width = bitMatrix.width
@@ -61,12 +68,21 @@ class GeneratorViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
 
-        return bitmap
+        bitmap
     }
 
-    fun getCurrentBarcode(): Bitmap? = _barcodeImage.value
+    fun getCurrentBarcode(): Triple<String, BarcodeFormat, Int>? {
+        return if (currentContent.isNotEmpty()) {
+            Triple(currentContent, currentFormat, currentSize)
+        } else {
+            null
+        }
+    }
 
     fun clearBarcode() {
+        currentContent = ""
+        currentFormat = BarcodeFormat.QR_CODE
+        currentSize = 512
         _barcodeImage.value = null
         _generationState.value = GenerationState.Idle
     }

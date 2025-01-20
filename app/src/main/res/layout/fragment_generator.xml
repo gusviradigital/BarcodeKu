@@ -4,9 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:menu="@menu/generator_menu"
+            app:title="Generator" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -14,26 +28,10 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayout"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/generator_input_hint">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:maxLines="1" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
+                android:layout_marginBottom="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -41,71 +39,52 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/generator_type"
-                        android:textAppearance="?attr/textAppearanceBodyLarge" />
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/barcodeTypeGroup"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/contentInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:singleSelection="true">
+                        android:hint="Content">
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/qrCodeChip"
-                            style="@style/Widget.Material3.Chip.Filter"
-                            android:layout_width="wrap_content"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/contentInput"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="QR Code" />
+                            android:inputType="textMultiLine"
+                            android:maxLines="4" />
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/code128Chip"
-                            style="@style/Widget.Material3.Chip.Filter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Code 128" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.chip.Chip
-                            android:id="@+id/code39Chip"
-                            style="@style/Widget.Material3.Chip.Filter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Code 39" />
-
-                    </com.google.android.material.chip.ChipGroup>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/generator_size"
-                        android:textAppearance="?attr/textAppearanceBodyLarge" />
-
-                    <com.google.android.material.slider.Slider
-                        android:id="@+id/sizeSlider"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/formatInputLayout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:valueFrom="100"
-                        android:valueTo="1000"
-                        android:stepSize="100" />
+                        android:layout_marginTop="16dp"
+                        android:hint="Format">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/formatInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/sizeInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:hint="Size">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sizeInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="512" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
@@ -114,34 +93,35 @@
             <ImageView
                 android:id="@+id/barcodePreview"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="24dp"
+                android:layout_height="300dp"
+                android:layout_marginBottom="16dp"
                 android:background="@android:color/white"
                 android:contentDescription="Barcode Preview"
+                android:padding="16dp"
                 android:scaleType="fitCenter" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:gravity="end"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/saveButton"
                     style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="@string/generator_save_image"
+                    android:layout_weight="1"
+                    android:text="Save"
                     app:icon="@drawable/ic_save" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/shareButton"
-                    style="@style/Widget.Material3.Button"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/generator_share_image"
+                    android:layout_weight="1"
+                    android:text="Share"
                     app:icon="@drawable/ic_share" />
 
             </LinearLayout>

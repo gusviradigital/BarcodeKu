@@ -21,4 +21,30 @@
         <item>id</item>
         <item>en</item>
     </string-array>
+
+    <string-array name="barcode_format_entries">
+        <item>QR Code</item>
+        <item>Aztec</item>
+        <item>Data Matrix</item>
+        <item>PDF417</item>
+        <item>Code 128</item>
+        <item>Code 39</item>
+        <item>EAN-13</item>
+        <item>EAN-8</item>
+        <item>UPC-A</item>
+        <item>UPC-E</item>
+    </string-array>
+
+    <string-array name="barcode_format_values">
+        <item>QR_CODE</item>
+        <item>AZTEC</item>
+        <item>DATA_MATRIX</item>
+        <item>PDF_417</item>
+        <item>CODE_128</item>
+        <item>CODE_39</item>
+        <item>EAN_13</item>
+        <item>EAN_8</item>
+        <item>UPC_A</item>
+        <item>UPC_E</item>
+    </string-array>
 </resources> 
