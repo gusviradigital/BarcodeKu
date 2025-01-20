@@ -149,7 +149,8 @@ class GeneratorFragment : Fragment() {
     }
 
     private fun createImageFile(content: String, format: BarcodeFormat): File {
-        val fileName = "barcode_${System.currentTimeMillis()}.png"
+        val sanitizedContent = content.take(20).replace(Regex("[^a-zA-Z0-9]"), "_")
+        val fileName = "barcode_${format.name.lowercase()}_${sanitizedContent}_${System.currentTimeMillis()}.png"
         return File(requireContext().cacheDir, fileName)
     }
 
@@ -209,9 +210,8 @@ class GeneratorFragment : Fragment() {
         _binding = null
     }
 
-    private fun onBarcodeGenerated(content: String, format: BarcodeFormat, size: Int) {
-        binding.barcodePreview.contentDescription = "Generated $format barcode for: $content ($size px)"
-        showSuccessDialog(getString(R.string.generator_save_success))
+    private fun onBarcodeGenerated(content: String, format: String) {
+        showSuccessDialog("Berhasil membuat barcode ${format}: ${content}")
     }
 
     private fun onBarcodeGenerationError(content: String, format: BarcodeFormat, size: Int) {

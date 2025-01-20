@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
 import com.abc.qrscannerdev.data.AppDatabase
 import com.abc.qrscannerdev.data.model.ScanResult
 import com.abc.qrscannerdev.data.repository.ScanResultRepository
@@ -12,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -22,26 +24,24 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     private val _showFavoritesOnly = MutableStateFlow(false)
     val showFavoritesOnly: LiveData<Boolean> = _showFavoritesOnly.asLiveData()
     private val _scanResults = MutableLiveData<List<ScanResult>>()
-    val scanResults: LiveData<List<ScanResult>> = _scanResults
-
+    
     init {
         val dao = AppDatabase.getDatabase(application).scanResultDao()
         repository = ScanResultRepository(dao)
         loadScanResults()
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     val scanResults: LiveData<List<ScanResult>> = searchQuery.flatMapLatest { query ->
         if (query.isEmpty()) {
             _showFavoritesOnly.flatMapLatest { showFavorites ->
                 if (showFavorites) {
-                    repository.getFavoriteScanResults()
+                    repository.getFavoriteScanResults().map { it }
                 } else {
-                    repository.getAllScanResults()
+                    repository.getAllScanResults().map { it }
                 }
             }
         } else {
-            repository.searchScanResults(query)
+            repository.searchScanResults(query).map { it }
         }
     }.asLiveData()
 
@@ -76,16 +76,17 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
 
     private fun loadScanResults() {
         viewModelScope.launch {
-            _scanResults.value = withContext(Dispatchers.IO) {
-                repository.getAllScanResults()
+            val results = withContext(Dispatchers.IO) {
+                repository.getAllScanResults().map { it }.asLiveData().value ?: emptyList()
             }
+            _scanResults.value = results
         }
     }
 
     fun getAllScans(callback: (List<ScanResult>) -> Unit) {
         viewModelScope.launch {
             val scans = withContext(Dispatchers.IO) {
-                repository.getAllScanResults()
+                repository.getAllScanResults().map { it }.asLiveData().value ?: emptyList()
             }
             callback(scans)
         }

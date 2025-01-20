@@ -65,6 +65,7 @@
     <string name="export_failed">Failed to export history</string>
 
     <!-- Results -->
+    <string name="result_title">Detail Pemindaian</string>
     <string name="result_copied">Content copied to clipboard</string>
     <string name="result_save_success">Saved successfully</string>
     <string name="result_save_failed">Failed to save</string>

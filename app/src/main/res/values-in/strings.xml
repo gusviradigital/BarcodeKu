@@ -65,14 +65,15 @@
     <string name="export_failed">Gagal mengekspor riwayat</string>
 
     <!-- Results -->
-    <string name="result_call_number">Panggil Nomor</string>
-    <string name="result_send_email">Kirim Email</string>
-    <string name="result_open_url">Buka URL</string>
-    <string name="result_copy_text">Salin Teks</string>
+    <string name="result_title">Detail Pemindaian</string>
     <string name="result_copied">Teks disalin ke clipboard</string>
     <string name="result_save_success">Berhasil disimpan</string>
     <string name="result_save_failed">Gagal menyimpan</string>
     <string name="result_share_via">Bagikan melalui</string>
+    <string name="result_open_url">Buka URL</string>
+    <string name="result_call_number">Panggil Nomor</string>
+    <string name="result_send_email">Kirim Email</string>
+    <string name="result_copy_text">Salin Teks</string>
 
     <!-- Business Features -->
     <string name="business_mode">Mode Bisnis</string>
