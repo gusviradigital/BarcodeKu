@@ -113,7 +113,7 @@ class ScannerFragment : Fragment() {
             binding.batchModeButton.isChecked = isBatchMode
         }
 
-        viewModel.batchResults.observe(viewLifecycleOwner) { results ->
+        viewModel.batchResults.observe(viewLifecycleOwner) { _ ->
             // Update batch results UI
         }
     }

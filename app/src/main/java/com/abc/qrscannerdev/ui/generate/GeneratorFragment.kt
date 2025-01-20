@@ -121,7 +121,7 @@ class GeneratorFragment : Fragment() {
     }
 
     private fun saveBarcode() {
-        viewModel.getCurrentBarcode()?.let { (content, format, size) ->
+        viewModel.getCurrentBarcode()?.let { (content, format, _) ->
             viewModel.barcodeImage.value?.let { bitmap ->
                 try {
                     val file = createImageFile(content, format)
@@ -135,7 +135,7 @@ class GeneratorFragment : Fragment() {
     }
 
     private fun shareBarcode() {
-        viewModel.getCurrentBarcode()?.let { (content, format, size) ->
+        viewModel.getCurrentBarcode()?.let { (content, format, _) ->
             viewModel.barcodeImage.value?.let { bitmap ->
                 try {
                     val file = createImageFile(content, format)
@@ -195,11 +195,13 @@ class GeneratorFragment : Fragment() {
     }
 
     private fun showLoading() {
-        // Implement loading state UI
+        binding.progressBar.visibility = View.VISIBLE
+        binding.barcodePreview.visibility = View.GONE
     }
 
     private fun hideLoading() {
-        // Implement hide loading state UI
+        binding.progressBar.visibility = View.GONE
+        binding.barcodePreview.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {
@@ -209,11 +211,11 @@ class GeneratorFragment : Fragment() {
 
     private fun onBarcodeGenerated(content: String, format: BarcodeFormat, size: Int) {
         showSuccessDialog(getString(R.string.generator_save_success))
-        binding.barcodePreview.contentDescription = "Generated $format barcode for: $content"
+        binding.barcodePreview.contentDescription = "Generated $format barcode for: $content ($size px)"
     }
 
     private fun onBarcodeGenerationError(content: String, format: BarcodeFormat, size: Int) {
-        showError(getString(R.string.generator_save_error))
+        showError("Failed to generate $format barcode for: $content with size $size px")
     }
 
     private fun clearInput() {
