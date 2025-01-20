@@ -117,4 +117,9 @@
     <string name="action_delete_all">Hapus Semua</string>
     <string name="action_export">Ekspor</string>
     <string name="action_import">Impor</string>
+
+    <!-- New strings for Indonesian translations -->
+    <string name="show_all">Tampilkan Semua</string>
+    <string name="show_favorites">Tampilkan Favorit</string>
+    <string name="delete_all_confirmation">Hapus semua riwayat pemindaian?</string>
 </resources> 

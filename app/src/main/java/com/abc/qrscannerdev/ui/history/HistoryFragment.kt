@@ -2,7 +2,6 @@ package com.abc.qrscannerdev.ui.history
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,6 +17,7 @@ class HistoryFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: HistoryViewModel by viewModels()
     private lateinit var adapter: ScanResultAdapter
+    private lateinit var searchAdapter: ScanResultAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +32,8 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setupRecyclerView()
+        setupSearchView()
+        setupFilterFab()
         observeViewModel()
     }
 
@@ -39,15 +41,6 @@ class HistoryFragment : Fragment() {
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.history_menu, menu)
-                val searchItem = menu.findItem(R.id.action_search)
-                val searchView = searchItem.actionView as SearchView
-                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String?): Boolean = false
-                    override fun onQueryTextChange(newText: String?): Boolean {
-                        viewModel.setSearchQuery(newText ?: "")
-                        return true
-                    }
-                })
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -81,16 +74,59 @@ class HistoryFragment : Fragment() {
             }
         )
 
-        binding.recyclerView.apply {
+        binding.historyRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@HistoryFragment.adapter
+        }
+    }
+
+    private fun setupSearchView() {
+        searchAdapter = ScanResultAdapter(
+            onItemClick = { scanResult ->
+                binding.searchView.hide()
+                findNavController().navigate(
+                    HistoryFragmentDirections.actionHistoryToDetail(scanResult.id)
+                )
+            },
+            onFavoriteClick = { scanResult ->
+                viewModel.toggleFavorite(scanResult)
+            },
+            onDeleteClick = { scanResult ->
+                viewModel.delete(scanResult)
+            }
+        )
+
+        binding.searchResultsRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = searchAdapter
+        }
+
+        binding.searchView.editText.setOnEditorActionListener { textView, _, _ ->
+            viewModel.setSearchQuery(textView.text.toString())
+            false
+        }
+    }
+
+    private fun setupFilterFab() {
+        binding.filterFab.setOnClickListener {
+            viewModel.toggleShowFavoritesOnly()
         }
     }
 
     private fun observeViewModel() {
         viewModel.scanResults.observe(viewLifecycleOwner) { results ->
             adapter.submitList(results)
+            searchAdapter.submitList(results)
             binding.emptyView.visibility = if (results.isEmpty()) View.VISIBLE else View.GONE
+        }
+
+        viewModel.showFavoritesOnly.observe(viewLifecycleOwner) { showFavoritesOnly ->
+            binding.filterFab.text = getString(
+                if (showFavoritesOnly) R.string.show_all else R.string.show_favorites
+            )
+            binding.filterFab.icon = requireContext().getDrawable(
+                if (showFavoritesOnly) R.drawable.ic_list else R.drawable.ic_favorite
+            )
         }
     }
 

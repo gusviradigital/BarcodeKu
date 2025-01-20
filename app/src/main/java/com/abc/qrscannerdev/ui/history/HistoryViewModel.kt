@@ -17,31 +17,35 @@ import kotlinx.coroutines.launch
 class HistoryViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: ScanResultRepository
     private val searchQuery = MutableStateFlow("")
-    private val showFavoritesOnly = MutableStateFlow(false)
+    private val _showFavoritesOnly = MutableStateFlow(false)
+    val showFavoritesOnly: LiveData<Boolean> = _showFavoritesOnly.asLiveData()
 
     init {
         val dao = AppDatabase.getDatabase(application).scanResultDao()
         repository = ScanResultRepository(dao)
     }
 
-    val scanResults: LiveData<List<ScanResult>> = showFavoritesOnly.flatMapLatest { showFavorites ->
-        if (showFavorites) {
-            repository.getFavoriteScanResults()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val scanResults: LiveData<List<ScanResult>> = searchQuery.flatMapLatest { query ->
+        if (query.isEmpty()) {
+            _showFavoritesOnly.flatMapLatest { showFavorites ->
+                if (showFavorites) {
+                    repository.getFavoriteScanResults()
+                } else {
+                    repository.getAllScanResults()
+                }
+            }
         } else {
-            repository.getAllScanResults()
+            repository.searchScanResults(query)
         }
-    }.asLiveData()
-
-    val searchResults = searchQuery.flatMapLatest { query ->
-        repository.searchScanResults(query)
     }.asLiveData()
 
     fun setSearchQuery(query: String) {
         searchQuery.value = query
     }
 
-    fun toggleFavorites() {
-        showFavoritesOnly.value = !showFavoritesOnly.value
+    fun toggleShowFavoritesOnly() {
+        _showFavoritesOnly.value = !_showFavoritesOnly.value
     }
 
     fun toggleFavorite(scanResult: ScanResult) {
@@ -50,13 +54,13 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun deleteScanResult(scanResult: ScanResult) {
+    fun delete(scanResult: ScanResult) {
         viewModelScope.launch {
             repository.delete(scanResult)
         }
     }
 
-    fun deleteAllScanResults() {
+    fun deleteAll() {
         viewModelScope.launch {
             repository.deleteAll()
         }
