@@ -35,7 +35,7 @@ class ScanResultAdapter(
 
         init {
             binding.root.setOnClickListener {
-                val position = bindingAdapterPosition
+                val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     onItemClick(getItem(position))
                 }
@@ -43,7 +43,7 @@ class ScanResultAdapter(
 
             binding.moreButton.setOnClickListener {
                 // Show popup menu with favorite and delete options
-                showPopupMenu(binding.moreButton, getItem(bindingAdapterPosition))
+                showPopupMenu(binding.moreButton, getItem(adapterPosition))
             }
         }
 
