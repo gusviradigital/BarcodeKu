@@ -21,6 +21,7 @@
 
     <!-- Scanner -->
     <string name="scanner_title">Scan Barcode</string>
+    <string name="scanner_flash">Flash</string>
     <string name="scanner_flash_on">Flash On</string>
     <string name="scanner_flash_off">Flash Off</string>
     <string name="scanner_auto_focus">Auto Focus</string>
@@ -29,7 +30,11 @@
     <string name="scanner_align">Align barcode within frame</string>
     <string name="scanner_permission_required">Camera permission required</string>
     <string name="scanner_permission_denied">Camera permission is required for scanning</string>
-    <string name="scanner_flash">Flash</string>
+    <string name="scanner_success">Scan successful!</string>
+    <string name="scanner_batch_mode_enabled">Batch mode enabled</string>
+    <string name="scanner_batch_item_added">Added: %s</string>
+    <string name="scanner_batch_complete">%d items scanned</string>
+    <string name="view">View</string>
 
     <!-- Generator -->
     <string name="generator_title">Generate Barcode</string>
@@ -56,6 +61,8 @@
     <string name="history_delete_confirm">Delete this item?</string>
     <string name="history_export">Export History</string>
     <string name="history_filter">Filter</string>
+    <string name="history_deleted">History cleared</string>
+    <string name="export_failed">Failed to export history</string>
 
     <!-- Results -->
     <string name="result_copied">Content copied to clipboard</string>

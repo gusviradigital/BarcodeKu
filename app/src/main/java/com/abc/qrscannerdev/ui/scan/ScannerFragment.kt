@@ -2,12 +2,16 @@ package com.abc.qrscannerdev.ui.scan
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
@@ -16,6 +20,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.abc.qrscannerdev.R
 import com.abc.qrscannerdev.databinding.FragmentScannerBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -23,6 +28,7 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 @androidx.camera.core.ExperimentalGetImage
 class ScannerFragment : Fragment() {
@@ -35,6 +41,10 @@ class ScannerFragment : Fragment() {
     private var imageAnalyzer: ImageAnalysis? = null
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var barcodeScanner: BarcodeScanner
+    
+    private var isAutoFocusEnabled = true
+    private var lastScanTime = 0L
+    private val scanCooldown = 1000L // 1 detik cooldown antara scan
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -94,8 +104,35 @@ class ScannerFragment : Fragment() {
     private fun setupUI() {
         binding.apply {
             flashButton.setOnClickListener { toggleFlash() }
-            focusButton.setOnClickListener { toggleAutoFocus() }
-            batchModeButton.setOnClickListener { viewModel.toggleBatchMode() }
+            focusButton.apply {
+                isChecked = isAutoFocusEnabled
+                setOnClickListener { toggleAutoFocus() }
+            }
+            batchModeButton.apply {
+                isChecked = viewModel.isBatchMode.value == true
+                setOnClickListener { 
+                    viewModel.toggleBatchMode()
+                    updateBatchModeUI(isChecked)
+                }
+            }
+        }
+    }
+
+    private fun updateBatchModeUI(enabled: Boolean) {
+        binding.batchModeButton.apply {
+            isChecked = enabled
+            icon = ContextCompat.getDrawable(requireContext(),
+                if (enabled) R.drawable.ic_batch_mode_active
+                else R.drawable.ic_batch_mode
+            )
+        }
+        
+        if (enabled) {
+            Snackbar.make(
+                binding.root,
+                getString(R.string.scanner_batch_mode_enabled),
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -110,11 +147,13 @@ class ScannerFragment : Fragment() {
         }
 
         viewModel.isBatchMode.observe(viewLifecycleOwner) { isBatchMode ->
-            binding.batchModeButton.isChecked = isBatchMode
+            updateBatchModeUI(isBatchMode)
         }
 
-        viewModel.batchResults.observe(viewLifecycleOwner) { _ ->
-            // Update batch results UI
+        viewModel.batchResults.observe(viewLifecycleOwner) { results ->
+            if (results.isNotEmpty()) {
+                showBatchResults(results.map { it.content })
+            }
         }
     }
 
@@ -150,12 +189,37 @@ class ScannerFragment : Fragment() {
                 preview,
                 imageAnalyzer
             )
+
+            // Setup initial auto focus
+            setupAutoFocus()
         } catch (e: Exception) {
             showError("Failed to bind camera use cases")
         }
     }
 
+    private fun setupAutoFocus() {
+        camera?.cameraControl?.let { control ->
+            if (isAutoFocusEnabled) {
+                val factory = SurfaceOrientedMeteringPointFactory(
+                    binding.viewFinder.width.toFloat(),
+                    binding.viewFinder.height.toFloat()
+                )
+                val centerPoint = factory.createPoint(0.5f, 0.5f)
+                val action = FocusMeteringAction.Builder(centerPoint)
+                    .setAutoCancelDuration(2, TimeUnit.SECONDS)
+                    .build()
+                control.startFocusAndMetering(action)
+            }
+        }
+    }
+
     private fun processImage(imageProxy: ImageProxy) {
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastScanTime < scanCooldown) {
+            imageProxy.close()
+            return
+        }
+
         val mediaImage = imageProxy.image
         if (mediaImage != null) {
             val image = InputImage.fromMediaImage(
@@ -168,7 +232,9 @@ class ScannerFragment : Fragment() {
                     if (barcodes.isNotEmpty()) {
                         val barcode = barcodes[0]
                         barcode.rawValue?.let { content ->
+                            lastScanTime = currentTime
                             viewModel.processScanResult(content, barcode.format.toString())
+                            vibrateOnScan()
                         }
                     }
                 }
@@ -185,22 +251,70 @@ class ScannerFragment : Fragment() {
 
     private fun handleScanSuccess(content: String, format: String) {
         if (viewModel.isBatchMode.value == true) {
-            // Show batch result UI
+            showBatchScanNotification(content)
         } else {
+            showScanSuccessNotification()
             findNavController().navigate(
                 ScannerFragmentDirections.actionScanToResult(content, format)
             )
         }
     }
 
+    private fun showScanSuccessNotification() {
+        Snackbar.make(
+            binding.root,
+            getString(R.string.scanner_success),
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun showBatchScanNotification(content: String) {
+        Snackbar.make(
+            binding.root,
+            getString(R.string.scanner_batch_item_added, content),
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun showBatchResults(results: List<String>) {
+        Snackbar.make(
+            binding.root,
+            getString(R.string.scanner_batch_complete, results.size),
+            Snackbar.LENGTH_LONG
+        ).setAction(getString(R.string.view)) {
+            // Navigate to batch results
+        }.show()
+    }
+
     private fun toggleFlash() {
         camera?.cameraControl?.enableTorch(
             !(camera?.cameraInfo?.torchState?.value == TorchState.ON)
-        )
+        )?.addListener({
+            binding.flashButton.icon = ContextCompat.getDrawable(
+                requireContext(),
+                if (camera?.cameraInfo?.torchState?.value == TorchState.ON)
+                    R.drawable.ic_flash_on
+                else
+                    R.drawable.ic_flash_off
+            )
+        }, ContextCompat.getMainExecutor(requireContext()))
     }
 
     private fun toggleAutoFocus() {
-        camera?.cameraControl?.cancelFocusAndMetering()
+        isAutoFocusEnabled = !isAutoFocusEnabled
+        binding.focusButton.isChecked = isAutoFocusEnabled
+        
+        if (isAutoFocusEnabled) {
+            setupAutoFocus()
+        } else {
+            camera?.cameraControl?.cancelFocusAndMetering()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun vibrateOnScan() {
+        val vibrator = ContextCompat.getSystemService(requireContext(), Vibrator::class.java)
+        vibrator?.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
     }
 
     private fun hasPermissions(): Boolean {
@@ -211,7 +325,7 @@ class ScannerFragment : Fragment() {
     }
 
     private fun showError(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

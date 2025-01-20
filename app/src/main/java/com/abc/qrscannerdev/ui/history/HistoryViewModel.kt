@@ -3,15 +3,17 @@ package com.abc.qrscannerdev.ui.history
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.abc.qrscannerdev.data.AppDatabase
 import com.abc.qrscannerdev.data.model.ScanResult
 import com.abc.qrscannerdev.data.repository.ScanResultRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HistoryViewModel(application: Application) : AndroidViewModel(application) {
@@ -19,10 +21,13 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     private val searchQuery = MutableStateFlow("")
     private val _showFavoritesOnly = MutableStateFlow(false)
     val showFavoritesOnly: LiveData<Boolean> = _showFavoritesOnly.asLiveData()
+    private val _scanResults = MutableLiveData<List<ScanResult>>()
+    val scanResults: LiveData<List<ScanResult>> = _scanResults
 
     init {
         val dao = AppDatabase.getDatabase(application).scanResultDao()
         repository = ScanResultRepository(dao)
+        loadScanResults()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -49,20 +54,40 @@ class HistoryViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun toggleFavorite(scanResult: ScanResult) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.update(scanResult.copy(isFavorite = !scanResult.isFavorite))
+            loadScanResults()
         }
     }
 
     fun delete(scanResult: ScanResult) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.delete(scanResult)
+            loadScanResults()
         }
     }
 
     fun deleteAll() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAll()
+            loadScanResults()
+        }
+    }
+
+    private fun loadScanResults() {
+        viewModelScope.launch {
+            _scanResults.value = withContext(Dispatchers.IO) {
+                repository.getAllScanResults()
+            }
+        }
+    }
+
+    fun getAllScans(callback: (List<ScanResult>) -> Unit) {
+        viewModelScope.launch {
+            val scans = withContext(Dispatchers.IO) {
+                repository.getAllScanResults()
+            }
+            callback(scans)
         }
     }
 } 

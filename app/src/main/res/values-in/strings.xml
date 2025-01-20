@@ -30,6 +30,11 @@
     <string name="scanner_align">Sejajarkan barcode dalam bingkai</string>
     <string name="scanner_permission_required">Izin kamera diperlukan</string>
     <string name="scanner_permission_denied">Tidak dapat memindai tanpa izin kamera</string>
+    <string name="scanner_success">Pemindaian berhasil!</string>
+    <string name="scanner_batch_mode_enabled">Mode batch diaktifkan</string>
+    <string name="scanner_batch_item_added">Ditambahkan: %s</string>
+    <string name="scanner_batch_complete">%d item telah dipindai</string>
+    <string name="view">Lihat</string>
 
     <!-- Generator -->
     <string name="generator_title">Buat Barcode</string>
@@ -56,6 +61,8 @@
     <string name="history_delete_confirm">Hapus item ini?</string>
     <string name="history_export">Ekspor Riwayat</string>
     <string name="history_filter">Filter</string>
+    <string name="history_deleted">Riwayat telah dihapus</string>
+    <string name="export_failed">Gagal mengekspor riwayat</string>
 
     <!-- Results -->
     <string name="result_call_number">Panggil Nomor</string>

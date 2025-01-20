@@ -1,7 +1,10 @@
 package com.abc.qrscannerdev.ui.history
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.FileProvider
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,6 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.abc.qrscannerdev.R
 import com.abc.qrscannerdev.databinding.FragmentHistoryBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import java.io.File
+import java.io.FileWriter
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
@@ -50,7 +58,7 @@ class HistoryFragment : Fragment() {
                         true
                     }
                     R.id.action_export -> {
-                        // TODO: Implement export functionality
+                        exportHistory()
                         true
                     }
                     else -> false
@@ -132,12 +140,57 @@ class HistoryFragment : Fragment() {
 
     private fun showDeleteAllDialog() {
         MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.history_delete_all)
             .setMessage(R.string.delete_all_confirmation)
             .setPositiveButton(R.string.delete) { _, _ ->
                 viewModel.deleteAll()
+                showSnackbar(getString(R.string.history_deleted))
             }
-            .setNegativeButton(android.R.string.cancel, null)
+            .setNegativeButton(R.string.cancel, null)
             .show()
+    }
+
+    private fun exportHistory() {
+        viewModel.getAllScans { scans ->
+            if (scans.isEmpty()) {
+                showSnackbar(getString(R.string.history_empty))
+                return@getAllScans
+            }
+
+            try {
+                val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
+                    .format(Date())
+                val filename = "scan_history_$timestamp.csv"
+                val file = File(requireContext().cacheDir, filename)
+
+                FileWriter(file).use { writer ->
+                    writer.append("Content,Format,Date\n")
+                    scans.forEach { scan ->
+                        writer.append("${scan.content},${scan.format},${scan.timestamp}\n")
+                    }
+                }
+
+                val uri = FileProvider.getUriForFile(
+                    requireContext(),
+                    "${requireContext().packageName}.provider",
+                    file
+                )
+
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/csv"
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                startActivity(Intent.createChooser(intent, getString(R.string.history_export)))
+            } catch (e: Exception) {
+                showSnackbar(getString(R.string.export_failed))
+            }
+        }
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

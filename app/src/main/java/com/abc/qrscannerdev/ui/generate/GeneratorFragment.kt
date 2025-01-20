@@ -210,8 +210,8 @@ class GeneratorFragment : Fragment() {
     }
 
     private fun onBarcodeGenerated(content: String, format: BarcodeFormat, size: Int) {
-        showSuccessDialog(getString(R.string.generator_save_success))
         binding.barcodePreview.contentDescription = "Generated $format barcode for: $content ($size px)"
+        showSuccessDialog(getString(R.string.generator_save_success))
     }
 
     private fun onBarcodeGenerationError(content: String, format: BarcodeFormat, size: Int) {
