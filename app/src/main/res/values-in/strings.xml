@@ -21,6 +21,7 @@
 
     <!-- Scanner -->
     <string name="scanner_title">Pindai Barcode</string>
+    <string name="scanner_flash">Lampu Flash</string>
     <string name="scanner_flash_on">Nyalakan Flash</string>
     <string name="scanner_flash_off">Matikan Flash</string>
     <string name="scanner_auto_focus">Fokus Otomatis</string>
@@ -32,13 +33,21 @@
 
     <!-- Generator -->
     <string name="generator_title">Buat Barcode</string>
-    <string name="generator_input_hint">Masukkan teks atau URL</string>
+    <string name="generator_input_hint">Masukkan teks</string>
     <string name="generator_type">Jenis Barcode</string>
     <string name="generator_size">Ukuran</string>
     <string name="generator_color">Warna</string>
     <string name="generator_create">Buat</string>
     <string name="generator_save_image">Simpan Gambar</string>
     <string name="generator_share_image">Bagikan Gambar</string>
+    <string name="generator_save_success">Barcode berhasil disimpan</string>
+    <string name="generator_save_error">Gagal menyimpan barcode</string>
+    <string name="generator_share_success">Barcode berhasil dibagikan</string>
+    <string name="generator_share_error">Gagal membagikan barcode</string>
+    <string name="generator_size_hint">Ukuran (px)</string>
+    <string name="generator_save">Simpan</string>
+    <string name="generator_share">Bagikan</string>
+    <string name="generator_share_via">Bagikan barcode melalui</string>
 
     <!-- History -->
     <string name="history_title">Riwayat Pemindaian</string>
@@ -49,11 +58,14 @@
     <string name="history_filter">Filter</string>
 
     <!-- Results -->
-    <string name="result_copied">Disalin ke clipboard</string>
+    <string name="result_call_number">Panggil Nomor</string>
+    <string name="result_send_email">Kirim Email</string>
+    <string name="result_open_url">Buka URL</string>
+    <string name="result_copy_text">Salin Teks</string>
+    <string name="result_copied">Teks disalin ke clipboard</string>
     <string name="result_save_success">Berhasil disimpan</string>
     <string name="result_save_failed">Gagal menyimpan</string>
     <string name="result_share_via">Bagikan melalui</string>
-    <string name="result_open_url">Buka URL</string>
 
     <!-- Business Features -->
     <string name="business_mode">Mode Bisnis</string>
@@ -98,4 +110,11 @@
     <string name="about_privacy_policy">Kebijakan Privasi</string>
     <string name="about_terms">Ketentuan Layanan</string>
     <string name="about_licenses">Lisensi Open Source</string>
+
+    <!-- Actions -->
+    <string name="action_favorite">Favorit</string>
+    <string name="action_delete">Hapus</string>
+    <string name="action_delete_all">Hapus Semua</string>
+    <string name="action_export">Ekspor</string>
+    <string name="action_import">Impor</string>
 </resources> 

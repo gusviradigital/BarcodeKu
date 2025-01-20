@@ -42,8 +42,12 @@
     <string name="generator_share_image">Share</string>
     <string name="generator_save_success">Barcode saved successfully</string>
     <string name="generator_save_error">Failed to save barcode</string>
+    <string name="generator_share_success">Barcode shared successfully</string>
     <string name="generator_share_error">Failed to share barcode</string>
     <string name="generator_share_via">Share barcode via</string>
+    <string name="generator_size_hint">Size (px)</string>
+    <string name="generator_save">Save</string>
+    <string name="generator_share">Share</string>
 
     <!-- History -->
     <string name="history_title">Scan History</string>
@@ -61,6 +65,7 @@
     <string name="result_open_url">Open URL</string>
     <string name="result_call_number">Call Number</string>
     <string name="result_send_email">Send Email</string>
+    <string name="result_copy_text">Copy Text</string>
 
     <!-- Business Features -->
     <string name="business_mode">Business Mode</string>
@@ -114,4 +119,7 @@
     <!-- Common -->
     <string name="action_favorite">Favorite</string>
     <string name="action_delete">Delete</string>
+    <string name="action_delete_all">Delete All</string>
+    <string name="action_export">Export</string>
+    <string name="action_import">Import</string>
 </resources>

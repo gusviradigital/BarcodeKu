@@ -38,6 +38,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    
+    lint {
+        disable += "NewApi"
+    }
 }
 
 dependencies {

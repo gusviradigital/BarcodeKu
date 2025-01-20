@@ -206,4 +206,20 @@ class GeneratorFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun onBarcodeGenerated(content: String, format: BarcodeFormat, size: Int) {
+        showSuccessDialog(getString(R.string.generator_save_success))
+        binding.barcodePreview.contentDescription = "Generated $format barcode for: $content"
+    }
+
+    private fun onBarcodeGenerationError(content: String, format: BarcodeFormat, size: Int) {
+        showError(getString(R.string.generator_save_error))
+    }
+
+    private fun clearInput() {
+        binding.contentInput.text?.clear()
+        binding.formatInput.setText(resources.getStringArray(R.array.barcode_format_entries)[0], false)
+        binding.sizeInput.setText("512")
+        viewModel.clearBarcode()
+    }
 } 

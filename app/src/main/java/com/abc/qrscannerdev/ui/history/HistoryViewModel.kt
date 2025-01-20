@@ -8,10 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.abc.qrscannerdev.data.AppDatabase
 import com.abc.qrscannerdev.data.model.ScanResult
 import com.abc.qrscannerdev.data.repository.ScanResultRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class HistoryViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: ScanResultRepository
     private val searchQuery = MutableStateFlow("")
